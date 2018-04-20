@@ -1,4 +1,5 @@
 require 'docking_station'
+require 'bike'
 
 describe DockingStation do
   bikes = Bike.new
@@ -10,12 +11,13 @@ describe DockingStation do
 
   it { is_expected.to respond_to(:bikes) }
 
-  it 'returns a working bike' do
+  it 'release a working bike' do
       subject.dock(bikes)
       expect(subject.release_bike).to be_working
   end
 
-  it 'docks something' do
+
+  it 'docks any bike' do
     expect(subject.dock(bikes)).to include bikes
   end
 
@@ -30,7 +32,7 @@ describe DockingStation do
     let(:bike) {Bike.new}
     it 'defaults capacity' do
       described_class::DEFAULT_CAPACITY.times do
-        subject.dock(bike)
+        subject.dock(bikes)
       end
       expect{ subject.dock(bike) }.to raise_error 'docking station is full'
       end
@@ -54,8 +56,11 @@ describe DockingStation do
       expect(subject.release_bike).to eq bikes
     end
 
+
     it 'raises error if no bikes available' do
         expect { subject.release_bike }.to raise_error 'no bikes available'
     end
+
+
   end
 end
